@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">VMware</string>
+    <string name="action_settings">Settings</string>
+    <string name="title">Distributed Resource Management QE Team</string>
+    <string name="desc">Stress and Performance Testing App</string>
+	<string name="title_job_create">Job Create</string>
+	<string name="title_job_Landing">Job Landing</string>
+	<string name="title_job_List_Display">Jobs</string>
+	<string name="title_job_Details">Job Details</string>
+	<string name="title_job_search">Job Search</string>
+    <string name="title_activity_login">Login</string>
+
+
+</resources>

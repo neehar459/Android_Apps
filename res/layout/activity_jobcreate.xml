@@ -1,0 +1,141 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    tools:context=".JobCreateActivity" >
+
+    <!-- Login progress -->
+
+    <LinearLayout
+        android:id="@+id/login_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/login_status_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/login_progress_jobcreation"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
+
+    <!-- Login form -->
+
+    <ScrollView
+        android:id="@+id/login_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="48dp"
+        android:background="#d2b48c" >
+
+        <LinearLayout
+            style="@style/LoginFormContainer"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_description"
+                android:inputType="text"
+                android:maxLines="3"
+                android:textColor="#000000"
+                android:singleLine="false" />
+
+            
+            <Spinner
+                android:id="@+id/priority"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/job_priority"
+                android:prompt="@string/prompt_priority"
+                android:textColor="#000000"
+                android:spinnerMode="dialog" />
+            
+            <Spinner
+                android:id="@+id/target_team_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/user_target_teams"
+                android:textColor="#000000"
+                android:prompt="@string/prompt_target_team_type"
+                android:spinnerMode="dialog" />
+            
+			<EditText
+                android:id="@+id/duration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_job_duration"
+                android:inputType="number"
+                android:textColor="#000000"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+          <LinearLayout
+    			android:layout_width="match_parent"
+    			android:layout_height="wrap_content" >
+  				<Button
+	                android:id="@+id/jobCreate_button"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_gravity="center"
+	                android:layout_weight="1"
+	                android:onClick="createJob"
+	                android:textColor="#000000"
+	                android:text="@string/action_job_create" />
+	            
+	            <Button
+	                android:id="@+id/reset_button"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_gravity="center"
+	                android:layout_weight="1"
+	                android:onClick="reset"
+	                android:textColor="#000000"
+	                android:text="@string/action_reset" />
+            
+  			</LinearLayout>
+  			
+           <LinearLayout
+    			android:layout_width="match_parent"
+    			android:layout_height="wrap_content" >
+  				<Button
+	                android:id="@+id/logout_button"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_gravity="center"
+	                android:layout_weight="1"
+	                android:textColor="#000000"
+	                android:onClick="logout"
+	                android:text="@string/action_logout" />
+	            
+	            <Button
+	                android:id="@+id/back_createscreenbutton"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_gravity="center"
+	                android:layout_weight="1"
+	                android:textColor="#000000"
+	                android:onClick="back"
+	                android:text="@string/action_back" />
+            
+  			</LinearLayout>
+            
+            
+        </LinearLayout>
+    </ScrollView>
+
+</merge>

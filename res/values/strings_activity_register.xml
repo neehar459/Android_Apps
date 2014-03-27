@@ -1,0 +1,107 @@
+<resources>
+
+    <string name="title_activity_register">Register</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email*</string>
+    <string name="prompt_user_type">Select user type</string>
+    <string-array name="user_roles">
+        <item>-SELECT USER ROLE-</item>
+        <item>DEVELOPER</item>
+        <item>QUALITY ENGG</item>
+        <item>MANAGER</item>
+        <item>CEO</item>        
+    </string-array>
+    
+    <string name="prompt_team_type">Select Team</string>
+    <string-array name="user_teams">
+        <item>-SELECT YOUR TEAM-</item>
+        <item>NSX</item>
+        <item>STORAGE</item>
+        <item>HYBRID CLOUD</item>
+        <item>END USER COMPUTING</item>
+        <item>CORPORATE TEAM</item>
+    </string-array>
+    
+    
+    <string name="prompt_target_team_type">Select Target Team</string>
+    <string-array name="user_target_teams">
+        <item>-SELECT TARGET TEAM-</item>
+        <item>NSX</item>
+        <item>STORAGE</item>
+        <item>HYBRID CLOUD</item>
+        <item>END USER COMPUTING</item>
+        <item>CORPORATE TEAM</item>
+    </string-array>
+    
+    <string name="prompt_priority">Select priority</string>
+    <string-array name="job_priority">
+        <item>-SELECT PRIORITY-</item>
+        <item>LOW</item>
+        <item>MEDIUM</item>
+        <item>HIGH</item>
+        <item>CRITICAL</item>        
+    </string-array>
+    
+    
+   <string name="prompt_description">Description*</string>
+   <string name="prompt_jobID">JobID</string>
+   <string name="prompt_prioritysearch">Priority</string>
+   <string name="prompt_status">Status</string>
+    <string name="prompt_user_name">Username*</string>
+    <string name="prompt_password">Password*</string>
+    <string name="prompt_startdate">Start Date</string>
+    <string name="prompt_enddate">End Date</string>
+    <string name="prompt_manager">Manager EmailId if not CEO*</string>
+    <string name="prompt_job_duration">Run Duration in hours*</string>
+    <string name="action_sign_in_register">Sign in</string>
+    <string name="action_enter">Enter</string>
+    <string name="action_register">Register</string>
+    <string name="action_job_create">Create</string>
+    <string name="action_job_create_full">Create Job</string>
+    <string name="action_job_search">Search</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_edit">Edit Job</string>
+    <string name="action_save_job">Save Job</string>
+    <string name="action_back_display">Back</string>
+    <string name="action_back_search">Back</string>
+    <string name="action_back">Back</string>
+    <string name="action_login">Login</string>
+    <string name="action_sync">Sync</string>
+    <string name="action_reset">Reset</string>
+    <string name="action_forgot_password">Recover lost password</string>
+    <string name="login_progress_signing_in">Signing in&#8230;</string>
+    <string name="login_progress_signing_up">Registering &#8230;</string>
+    <string name="login_progress_searching">Searching &#8230;</string>
+    <string name="login_progress_jobcreation">Creating &#8230;</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_noAtTheRate">Email should have @</string>
+    <string name="error_atFollDot">. cannot be next to @</string>
+    <string name="error_noDot">Email should have .</string>
+    <string name="error_justdotatrate">Email cannot be just @.</string>
+    <string name="error_invalid_FirstName">First name cannot be empty</string>
+    <string name="error_invalid_UserName">Username cannot be empty</string>
+    <string name="error_invalid_manageremail">Manager Email cannot be empty</string>
+    <string name="error_invalid_LastName">Last name cannot be empty</string>
+    <string name="error_invalid_password">Password min length is 4</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_empty_duration">Duration cannot be empty</string>
+    <string name="error_empty_description">Description cannot be empty</string>
+    <string name="error_jobfailure">Failure</string>
+    <string name="error_email_required">Email is required</string>
+    <string name="error_email_registered">Email already registered</string>
+    <string name="error_pwd_required">Password is required</string>
+    <string name="error_error_sync">Sync Error</string>
+    <string name="error_dotcom">Email should contain .com or .edu</string>
+	<string name="error_field_at_rate">Email cannot have two @</string>
+	<string name="error_invalid_managermail">Manager mailid is not valid</string>
+	<string name="error_field_email_length">Email length cannot be more than 100</string>
+	<string name="error_field_pwd_length">Password length cannot be more than 50</string>
+	<string name="logo_desc">logo</string>
+	<string name="error_empty_jobid">JobID cannot be empty</string>
+	<string name="error_empty_allfields">Enter atleast one parameter</string>
+	<string name="error_startdate_required">Start Date is required</string>
+	<string name="error_enddate_required">End Date is required</string>
+	
+	
+</resources>

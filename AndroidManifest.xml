@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.vmware"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="18" />
+
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:name="com.vmware.GlobalValues"
+        android:theme="@style/AppTheme" >
+        
+        <activity
+            android:name="com.vmware.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.vmware.RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:parentActivityName="com.vmware.MainActivity"
+            android:windowSoftInputMode="adjustResize|stateVisible">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vmware.MainActivity" />
+        </activity>
+        
+         <activity
+            android:name="com.vmware.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:parentActivityName="com.vmware.RegisterActivity"
+            android:theme="@style/FullscreenTheme" 
+            android:windowSoftInputMode="adjustResize|stateVisible">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vmware.RegisterActivity" />
+        </activity>
+         
+         <activity
+            android:name="com.vmware.JobCreateActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_job_create"
+            android:parentActivityName="com.vmware.JobLandActivity"
+            android:theme="@style/FullscreenTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vmware.JobLandActivity" />
+        </activity>
+        
+         
+         <activity
+            android:name="com.vmware.JobSearchActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_job_search"
+            android:parentActivityName="com.vmware.JobLandActivity"
+            android:theme="@style/FullscreenTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vmware.JobLandActivity" />
+        </activity> 
+         
+        
+         <activity
+            android:name="com.vmware.JobLandActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_job_Landing"
+            android:parentActivityName="com.vmware.LoginActivity"
+            android:theme="@style/FullscreenTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vmware.LoginActivity" />
+        </activity>
+         
+          <activity
+            android:name="com.vmware.JobListDisplayActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_job_List_Display"
+            android:parentActivityName="com.vmware.JobSearchAvtivity"
+            android:theme="@style/FullscreenTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vmware.JobSearchAvtivity" />
+        </activity>
+         
+          <activity
+            android:name="com.vmware.JobDetailsDisplayActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_job_Details"
+            android:parentActivityName="com.vmware.JobListDisplayActivity"
+            android:theme="@style/FullscreenTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vmware.JobListDisplayActivity" />
+        </activity>
+         
+         
+    </application>
+
+</manifest>
