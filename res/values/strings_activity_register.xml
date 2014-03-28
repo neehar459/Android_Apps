@@ -85,6 +85,7 @@
     <string name="error_invalid_LastName">Last name cannot be empty</string>
     <string name="error_invalid_password">Password min length is 4</string>
     <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_incorrect_email">Email Id not registered yet</string>
     <string name="error_empty_duration">Duration cannot be empty</string>
     <string name="error_empty_description">Description cannot be empty</string>
     <string name="error_jobfailure">Failure</string>

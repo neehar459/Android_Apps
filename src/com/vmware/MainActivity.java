@@ -11,18 +11,16 @@ import android.view.View;
 public class MainActivity extends Activity {
 	private static final String PREFRENCES_NAME = "myPrefs";
 	
-	
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
 		SharedPreferences sharedPref= getSharedPreferences(PREFRENCES_NAME, 0);
 		if(sharedPref!= null){
-			String userName = sharedPref.getString("userName", "");
+			//String userName = sharedPref.getString("userName", "");
 			boolean isRegistered = sharedPref.getBoolean("isRegistered", false);
 			boolean isLoggedin = sharedPref.getBoolean("isLoggedin", false);
-			//isRegistered = false; // remove this later
-			// if the user is not registered, registration page has to be loaded
 			if (isRegistered == false){
 				setContentView(R.layout.activity_main);
 			}else if (isRegistered == true && isLoggedin == true){ // if the user is already registered and already loggedin, the landing page 

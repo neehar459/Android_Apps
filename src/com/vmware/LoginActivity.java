@@ -2,6 +2,7 @@ package com.vmware;
 
 
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -12,12 +13,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+@SuppressLint("DefaultLocale")
 public class LoginActivity extends Activity {
 
 	private UserLoginTask mAuthTask = null;
@@ -32,11 +35,7 @@ public class LoginActivity extends Activity {
 	// UI references.
 	private EditText mEmailView;
 	private EditText mPasswordView;
-	/*private View mLoginFormView;
-	private View mLoginStatusView;
-	*/
-	// private TextView mLoginStatusMessageView;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -47,9 +46,7 @@ public class LoginActivity extends Activity {
 		// Set up the login form.
 		mEmailView = (EditText) findViewById(R.id.email);
 		mPasswordView = (EditText) findViewById(R.id.password);
-		//mLoginFormView = findViewById(R.id.login_form);
-		//mLoginStatusView = findViewById(R.id.login_status);
-	
+		
 	}
 
 	/**
@@ -82,6 +79,7 @@ public class LoginActivity extends Activity {
 
 	public void validUser(View view) {
 		// Reset errors.
+		try{
 		mEmailView.setError(null);
 		mPasswordView.setError(null);
 		atCount = 0;
@@ -91,94 +89,111 @@ public class LoginActivity extends Activity {
 		}
 		// Store values at the time of the login attempt.
 		mEmail = mEmailView.getText().toString();
+		mEmail =mEmail.toLowerCase();
 		mPassword = mPasswordView.getText().toString();
-
-		boolean cancel = false;
-		View focusView = null;
-		if (TextUtils.isEmpty(mEmail)) {
-			mEmailView.setError(getString(R.string.error_email_required));
-			focusView = mEmailView;
-			cancel = true;
-		} else {
-			for (int i = 0; i < mEmail.length(); i++) {
-				if (mEmail.charAt(i) == '@') {
-					atCount++;
+		
+		
+		
+			boolean cancel = false;
+			View focusView = null;
+			dbHandler = new DataHandler(getBaseContext());
+			dbHandler.open();
+			boolean validEmail = dbHandler.isUserRegistered(mEmail);
+			if (TextUtils.isEmpty(mEmail)) {
+				mEmailView.setError(getString(R.string.error_email_required));
+				focusView = mEmailView;
+				cancel = true;
+			} else {
+				for (int i = 0; i < mEmail.length(); i++) {
+					if (mEmail.charAt(i) == '@') {
+						atCount++;
+					}
+					if (mEmail.charAt(i) == '.') {
+						dotCount++;
+					}
 				}
-				if (mEmail.charAt(i) == '.') {
-					dotCount++;
-				}
-			}
-			if (mEmail.length() > 100) {
-				mEmailView
-						.setError(getString(R.string.error_field_email_length));
-				focusView = mEmailView;
-				cancel = true;
-			}  else if (atCount == 0) {
-				mEmailView.setError(getString(R.string.error_noAtTheRate));
-				focusView = mEmailView;
-				cancel = true;
-			} else if (dotCount == 0) { // Added code for . check
-				mEmailView.setError(getString(R.string.error_noDot));
-				focusView = mEmailView;
-				cancel = true;
-			}else if (atCount > 1) {
-				mEmailView.setError(getString(R.string.error_field_at_rate));
-				focusView = mEmailView;
-				cancel = true;
-			}else if(mEmail.length() == 2){
-				if(atCount == 1 && dotCount == 1){
-					mEmailView.setError(getString(R.string.error_justdotatrate));
+				if (mEmail.length() > 100) {
+					mEmailView
+							.setError(getString(R.string.error_field_email_length));
+					focusView = mEmailView;
+					cancel = true;
+				}  else if (atCount == 0) {
+					mEmailView.setError(getString(R.string.error_noAtTheRate));
+					focusView = mEmailView;
+					cancel = true;
+				} else if (dotCount == 0) { // Added code for . check
+					mEmailView.setError(getString(R.string.error_noDot));
+					focusView = mEmailView;
+					cancel = true;
+				}else if (atCount > 1) {
+					mEmailView.setError(getString(R.string.error_field_at_rate));
+					focusView = mEmailView;
+					cancel = true;
+				}else if(mEmail.length() == 2){
+					if(atCount == 1 && dotCount == 1){
+						mEmailView.setError(getString(R.string.error_justdotatrate));
+						focusView = mEmailView;
+						cancel = true;
+					}
+				}else if (!(mEmail.contains("com") || mEmail.contains(".edu"))){
+					mEmailView.setError(getString(R.string.error_dotcom));
+					focusView = mEmailView;
+					cancel = true;
+				}else if (TextUtils.isEmpty(mPassword)) {
+					mPasswordView.setError(getString(R.string.error_pwd_required));
+					focusView = mPasswordView;
+					cancel = true;
+				} else if (mPassword.length() < 4) {
+					mPasswordView.setError(getString(R.string.error_invalid_password));
+					focusView = mPasswordView;
+					cancel = true;
+				} else if (mPassword.length() > 50) {
+					mPasswordView.setError(getString(R.string.error_field_pwd_length));
+					focusView = mPasswordView;
+					cancel = true;
+				}else if(validEmail == false){
+					mEmailView.setError(getString(R.string.error_incorrect_email));
 					focusView = mEmailView;
 					cancel = true;
 				}
-			}else if (!(mEmail.contains("com") || mEmail.contains(".edu"))){
-				mEmailView.setError(getString(R.string.error_dotcom));
-				focusView = mEmailView;
-				cancel = true;
-			}else if (TextUtils.isEmpty(mPassword)) {
-				mPasswordView.setError(getString(R.string.error_pwd_required));
-				focusView = mPasswordView;
-				cancel = true;
-			} else if (mPassword.length() < 4) {
-				mPasswordView.setError(getString(R.string.error_invalid_password));
-				focusView = mPasswordView;
-				cancel = true;
-			} else if (mPassword.length() > 50) {
-				mPasswordView.setError(getString(R.string.error_field_pwd_length));
-				focusView = mPasswordView;
-				cancel = true;
+
+				
 			}
+			if (cancel) {
+
+				focusView.requestFocus();
+			} else {
+
+				showProgress(true);
+				
+				String result = dbHandler.validateUser(mEmail, mPassword);
+				if (result.equalsIgnoreCase("success")) {
+					Toast.makeText(getBaseContext(), "Login Successful", Toast.LENGTH_LONG)
+							.show();
+					SharedPreferences settings = getSharedPreferences(PREFRENCES_NAME, Context.MODE_PRIVATE);
+					SharedPreferences.Editor editor = settings.edit();
+					editor.putBoolean("isLoggedin", true);
+					editor.commit();
+					nextActivity();
+				} else {
+					mPasswordView
+							.setError(getString(R.string.error_incorrect_password));
+					mPasswordView.requestFocus();
+				}
+			}
+		}catch(Exception exception){
+			
+			Log.e("LOGINACTIVITY", "Exception Occured",exception) ;
+		}finally{ // close connections
+			if(dbHandler!=null ){
+				dbHandler.close();
+			}
+		}
+		
 
 			
-		}
-		if (cancel) {
-
-			focusView.requestFocus();
-		} else {
-
-			// mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
-			showProgress(true);
-			dbHandler = new DataHandler(getBaseContext());
-			dbHandler.open();
-			String result = dbHandler.validateUser(mEmail, mPassword);
-			if (result.equalsIgnoreCase("success")) {
-				Toast.makeText(getBaseContext(), "Login Successful", Toast.LENGTH_LONG)
-						.show();
-				SharedPreferences settings = getSharedPreferences(PREFRENCES_NAME, Context.MODE_PRIVATE);
-				SharedPreferences.Editor editor = settings.edit();
-				editor.putBoolean("isLoggedin", true);
-				editor.commit();
-			} else {
-				mPasswordView
-						.setError(getString(R.string.error_incorrect_password));
-				mPasswordView.requestFocus();
-			}
-
-			dbHandler.close();
-			mAuthTask = new UserLoginTask();
-			mAuthTask.execute((Void) null);
-
-		}
+			
+		
 	}
 
 	
@@ -211,7 +226,10 @@ public class LoginActivity extends Activity {
 		@Override
 		protected void onPostExecute(final Boolean success) {
 			mAuthTask = null;
-			nextActivity();
+			if(success){
+				nextActivity();
+			}
+			
 			showProgress(false);
 		}
 

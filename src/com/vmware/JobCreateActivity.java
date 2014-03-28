@@ -10,9 +10,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -24,7 +24,7 @@ public class JobCreateActivity extends Activity {
 	private static final String PREFRENCES_NAME = "myPrefs";
 	DataHandler dbHandler;
 	Context context = this;
-	private EditText mSyncView;
+	//private EditText mSyncView;
 	private String mPriority;
 	private String mTeam;
 	private Spinner mPrioritySpinner;
@@ -62,60 +62,70 @@ public class JobCreateActivity extends Activity {
 	
 	
 	public void createJob(View view) {
+		try{
 		mDescription = mDescView.getText().toString();
 		mDuration = mDurationView.getText().toString();
 		mTeam = mTeamSpinner.getSelectedItem().toString();
 		mPriority = mPrioritySpinner.getSelectedItem().toString();
 		
 		
-		if(mDescription == null || mDescription.length() == 0){
-			mDescView.setError(getString(R.string.error_empty_description));
-			mDescView.requestFocus();
-		}else if(mPriority.equalsIgnoreCase("-SELECT PRIORITY-")){
-			Toast.makeText(JobCreateActivity.this, "Please Select the Priority", Toast.LENGTH_LONG).show();
-			return;
-		}else if(mTeam.equalsIgnoreCase("-SELECT TARGET TEAM-")){
-			Toast.makeText(JobCreateActivity.this, "Please Select the Target Team type", Toast.LENGTH_LONG).show();
-			return;
-		}
-		else if (mDuration == null || mDuration.length() == 0){
-			mDurationView.setError(getString(R.string.error_empty_duration));
-			mDurationView.requestFocus();
-		}else{
-			SharedPreferences sharedPref= getSharedPreferences(PREFRENCES_NAME, 0);
-			String userName = sharedPref.getString("userName", "");	
-			dbHandler = new DataHandler(getBaseContext());
-			dbHandler.open();
-			List<UserDetails> userList = dbHandler.fetchUserDetails(userName); 
-			if(userList != null && userList.size() !=0){
-				String userID = String.valueOf(userList.get(0).getUserID());
-				Date todayDate = new Date();
-				String selfTeam = userList.get(0).getTeam();
-				long noOfInsertedRecords = dbHandler.createJob(userID, todayDate.toString(), selfTeam, mPriority, mTeam, mDuration, mDescription);
-				if(noOfInsertedRecords > -1){
-					Toast.makeText(getBaseContext(), "Task Created", Toast.LENGTH_LONG).show();
-					AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-					alertDialogBuilder.setTitle("Create Job");
-					alertDialogBuilder.setMessage("Do you want to create another job");
-					alertDialogBuilder.setCancelable(false);
-					alertDialogBuilder.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,int id) {
-							resetBack();
-						}
-					  });
-					alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,int id) {
-							dialog.cancel();
-						}
-					});
-					AlertDialog alertDialog = alertDialogBuilder.create();
-					alertDialog.show();
-				}else{
-					mDurationView.setError(getString(R.string.error_jobfailure));
-					mDurationView.requestFocus();
-				}
+		
+			if(mDescription == null || mDescription.length() == 0){
+				mDescView.setError(getString(R.string.error_empty_description));
+				mDescView.requestFocus();
+			}else if(mPriority.equalsIgnoreCase("-SELECT PRIORITY-")){
+				Toast.makeText(JobCreateActivity.this, "Please Select the Priority", Toast.LENGTH_LONG).show();
+				return;
+			}else if(mTeam.equalsIgnoreCase("-SELECT TARGET TEAM-")){
+				Toast.makeText(JobCreateActivity.this, "Please Select the Target Team type", Toast.LENGTH_LONG).show();
+				return;
 			}
-			dbHandler.close();
+			else if (mDuration == null || mDuration.length() == 0){
+				mDurationView.setError(getString(R.string.error_empty_duration));
+				mDurationView.requestFocus();
+			}else{
+				SharedPreferences sharedPref= getSharedPreferences(PREFRENCES_NAME, 0);
+				String userName = sharedPref.getString("userName", "");	
+				dbHandler = new DataHandler(getBaseContext());
+				dbHandler.open();
+				List<UserDetails> userList = dbHandler.fetchUserDetails(userName); 
+				if(userList != null && userList.size() !=0){
+					String userID = String.valueOf(userList.get(0).getUserID());
+					Date todayDate = new Date();
+					String selfTeam = userList.get(0).getTeam();
+					long noOfInsertedRecords = dbHandler.createJob(userID, todayDate.toString(), selfTeam, mPriority, mTeam, mDuration, mDescription);
+					if(noOfInsertedRecords > -1){
+						Toast.makeText(getBaseContext(), "Task Created", Toast.LENGTH_LONG).show();
+						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+						alertDialogBuilder.setTitle("Create Job");
+						alertDialogBuilder.setMessage("Do you want to create another job");
+						alertDialogBuilder.setCancelable(false);
+						alertDialogBuilder.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,int id) {
+								resetBack();
+							}
+						  });
+						alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,int id) {
+								dialog.cancel();
+							}
+						});
+						AlertDialog alertDialog = alertDialogBuilder.create();
+						alertDialog.show();
+					}else{
+						mDurationView.setError(getString(R.string.error_jobfailure));
+						mDurationView.requestFocus();
+					}
+				}
+				
+			}
+		}catch(Exception exception){
+			Log.e("JobCreateACTIVITY", exception.getMessage().toString()) ;
+		}
+		finally{
+			if(dbHandler!=null ){
+				dbHandler.close();
+			}
 		}
 	}
 	
@@ -148,40 +158,5 @@ public class JobCreateActivity extends Activity {
 	public void resetBack(){
 		Intent intent = new Intent(this, JobCreateActivity.class);
 		startActivity(intent);
-	}
-
-	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-		@Override
-		protected Boolean doInBackground(Void... params) {
-
-			try {
-				
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				return false;
-			}
-
-		// TODO: register the new account here.
-			return true;
-		}
-
-		@Override
-		protected void onPostExecute(final Boolean success) {
-			
-
-			if (success) {
-				// finish(); should go to next page
-				// nextActivity();
-			} else {
-				mSyncView.setError(getString(R.string.error_error_sync));
-				mSyncView.requestFocus();
-			}
-		}
-
-		@Override
-		protected void onCancelled() {
-			
-
-		}
 	}
 }

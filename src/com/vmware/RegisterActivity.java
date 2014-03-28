@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +30,7 @@ import android.widget.Toast;
 public class RegisterActivity extends Activity {
 
 	private static final String PREFRENCES_NAME = "myPrefs";
-	private UserLoginTask mAuthTask = null;
+	private UserRegistrationTask mAuthTask = null;
 	Button signUp;
 	Button signIn;
 	DataHandler dbHandler;
@@ -164,7 +165,7 @@ public class RegisterActivity extends Activity {
 	 */
 	public void attemptRegister() {
 		// Reset errors.
-		
+		try{
 		mEmailView.setError(null);
 		mPasswordView.setError(null);
 		mUserNameView.setError(null);
@@ -190,178 +191,169 @@ public class RegisterActivity extends Activity {
 		mManagerEmail= mManagerEmailView.getText().toString();
 		mRole = String.valueOf(mRoleSpinner.getSelectedItem());
 		mTeam = String.valueOf(mTeamSpinner.getSelectedItem());
-		/*System.out.println(" User Inputs in attemptRegister");
-		System.out.println("Email entered : "+mEmail);
-		System.out.println("username entered : "+mUserName);
-		System.out.println("Password entered : "+mPassword);
-		System.out.println("Manager EmailId entered : "+mManagerEmail);
-		System.out.println("Role entered : "+mRole);
-		System.out.println("Team entered : "+mTeam);
-		*/mRole = mRoleSpinner.getSelectedItem().toString();
+		mRole = mRoleSpinner.getSelectedItem().toString();
 		mTeam = mTeamSpinner.getSelectedItem().toString();
 		
-		dbHandler = new DataHandler(getBaseContext());
-		dbHandler.open();
-		boolean userRegistered = dbHandler.isUserRegistered(mEmail);
-		boolean cancel = false;
-		View focusView = null;
 		
-		if (TextUtils.isEmpty(mEmail)) { // check if the email is empty or not 
-			mEmailView.setError(getString(R.string.error_email_required));
-			focusView = mEmailView;
-			cancel = true;
-		}else if (null == mUserName || mUserName.length() == 0) { // check if the username is null or not 
-			mUserNameView.setError(getString(R.string.error_invalid_UserName));
-			focusView = mUserNameView;
-			cancel = true;
-		}else if (TextUtils.isEmpty(mPassword)) { // check if the password is empty or not  
-			mPasswordView.setError(getString(R.string.error_pwd_required));
-			focusView = mPasswordView;
-			cancel = true;
-		}else if(mRole.equalsIgnoreCase("-SELECT USER ROLE-")){
-			Toast.makeText(RegisterActivity.this, "Please Select the User Role !!", Toast.LENGTH_LONG).show();
-			return;
-		}else if(mTeam.equalsIgnoreCase("-SELECT YOUR TEAM-")){
-			Toast.makeText(RegisterActivity.this, "Please Select Your Team  !!", Toast.LENGTH_LONG).show();
-			return;
-		}else if(userRegistered){ // Check for a valid email address.
-			//System.out.println("User is already registered");
-			mEmailView.setError(getString(R.string.error_email_registered));
-			focusView = mEmailView;
-			cancel = true;
-		} else {
-			
-			// Check for only one occurence of '@' and '.'
-			for (int i = 0; i < mEmail.length(); i++) {
-				if (mEmail.charAt(i) == '@') {
-					atCount++;
-				}
-				if (mEmail.charAt(i) == '.') {
-					dotCount++;
-				}
-			}
-			for (int i = 0; i < mManagerEmail.length(); i++) {
-				if (mManagerEmail.charAt(i) == '@') {
-					managerAtCount++;
-				}
-				if (mManagerEmail.charAt(i) == '.') {
-					managerDotCount++;
-				}
-			}
-			//System.out.println("managerDotCount : "+managerDotCount);
-			//System.out.println("managerAtCount : "+managerAtCount);
-			if (mEmail.length() > 100) {
-				mEmailView
-						.setError(getString(R.string.error_field_email_length));
+		
+		
+			dbHandler = new DataHandler(getBaseContext());
+			dbHandler.open();
+			boolean userRegistered = dbHandler.isUserRegistered(mEmail);
+			boolean cancel = false;
+			View focusView = null;
+			if (TextUtils.isEmpty(mEmail)) { // check if the email is empty or not 
+				mEmailView.setError(getString(R.string.error_email_required));
 				focusView = mEmailView;
 				cancel = true;
-			}else if (atCount == 0) {
-				mEmailView.setError(getString(R.string.error_noAtTheRate));
+			}else if (null == mUserName || mUserName.length() == 0) { // check if the username is null or not 
+				mUserNameView.setError(getString(R.string.error_invalid_UserName));
+				focusView = mUserNameView;
+				cancel = true;
+			}else if (TextUtils.isEmpty(mPassword)) { // check if the password is empty or not  
+				mPasswordView.setError(getString(R.string.error_pwd_required));
+				focusView = mPasswordView;
+				cancel = true;
+			}else if(mRole.equalsIgnoreCase("-SELECT USER ROLE-")){
+				Toast.makeText(RegisterActivity.this, "Please Select the User Role !!", Toast.LENGTH_LONG).show();
+				return;
+			}else if(mTeam.equalsIgnoreCase("-SELECT YOUR TEAM-")){
+				Toast.makeText(RegisterActivity.this, "Please Select Your Team  !!", Toast.LENGTH_LONG).show();
+				return;
+			}else if(userRegistered){ // Check for a valid email address.
+				//System.out.println("User is already registered");
+				mEmailView.setError(getString(R.string.error_email_registered));
 				focusView = mEmailView;
 				cancel = true;
-			}else if (dotCount == 0) {
-				mEmailView.setError(getString(R.string.error_noDot));
-				focusView = mEmailView;
-				cancel = true;
-			}else if (atCount > 1) {
-				mEmailView.setError(getString(R.string.error_field_at_rate));
-				focusView = mEmailView;
-				cancel = true;
-			}else if(mEmail.length() == 2){
-				if(atCount == 1 && dotCount == 1){
-					//System.out.println("email has just @.");
-					mEmailView.setError(getString(R.string.error_justdotatrate));
+			} else {
+				
+				// Check for only one occurence of '@' and '.'
+				for (int i = 0; i < mEmail.length(); i++) {
+					if (mEmail.charAt(i) == '@') {
+						atCount++;
+					}
+					if (mEmail.charAt(i) == '.') {
+						dotCount++;
+					}
+				}
+				for (int i = 0; i < mManagerEmail.length(); i++) {
+					if (mManagerEmail.charAt(i) == '@') {
+						managerAtCount++;
+					}
+					if (mManagerEmail.charAt(i) == '.') {
+						managerDotCount++;
+					}
+				}
+					if (mEmail.length() > 100) {
+					mEmailView
+							.setError(getString(R.string.error_field_email_length));
+					focusView = mEmailView;
+					cancel = true;
+				}else if (atCount == 0) {
+					mEmailView.setError(getString(R.string.error_noAtTheRate));
+					focusView = mEmailView;
+					cancel = true;
+				}else if (dotCount == 0) {
+					mEmailView.setError(getString(R.string.error_noDot));
+					focusView = mEmailView;
+					cancel = true;
+				}else if (atCount > 1) {
+					mEmailView.setError(getString(R.string.error_field_at_rate));
+					focusView = mEmailView;
+					cancel = true;
+				}else if(mEmail.length() == 2){
+					if(atCount == 1 && dotCount == 1){
+						mEmailView.setError(getString(R.string.error_justdotatrate));
+						focusView = mEmailView;
+						cancel = true;
+					}
+				}else if (!(mEmail.contains("com") || mEmail.contains(".edu"))){
+					mEmailView.setError(getString(R.string.error_dotcom));
 					focusView = mEmailView;
 					cancel = true;
 				}
-			}else if (!(mEmail.contains("com") || mEmail.contains(".edu"))){
-				mEmailView.setError(getString(R.string.error_dotcom));
-				focusView = mEmailView;
-				cancel = true;
-			}
-			 else if (mPassword.length() < 4) {
-				mPasswordView.setError(getString(R.string.error_invalid_password));
-				focusView = mPasswordView;
-				cancel = true;
-			} else if (mPassword.length() > 50) {
-				mPasswordView.setError(getString(R.string.error_field_pwd_length));
-				focusView = mPasswordView;
-				cancel = true;
-			} 
-			/*else if (mManagerEmail== null ||  mManagerEmail.length() == 0){
-				mManagerEmailView.setError(getString(R.string.error_email_required));
-				focusView = mManagerEmailView;
-				cancel = true;
-			}*/else if(!mRole.equalsIgnoreCase("CEO")){
-				if(mManagerEmail == null || mManagerEmail.length() == 0){
-					mManagerEmailView.setError(getString(R.string.error_invalid_manageremail));
-					focusView = mManagerEmailView;
+				 else if (mPassword.length() < 4) {
+					mPasswordView.setError(getString(R.string.error_invalid_password));
+					focusView = mPasswordView;
 					cancel = true;
-				}else{
-					boolean isValidManager = dbHandler.isUserRegistered(mManagerEmail);
-					if(isValidManager == false){
-						mManagerEmailView.setError(getString(R.string.error_invalid_managermail));
+				} else if (mPassword.length() > 50) {
+					mPasswordView.setError(getString(R.string.error_field_pwd_length));
+					focusView = mPasswordView;
+					cancel = true;
+				} 
+				else if(!mRole.equalsIgnoreCase("CEO")){
+					if(mManagerEmail == null || mManagerEmail.length() == 0){
+						mManagerEmailView.setError(getString(R.string.error_invalid_manageremail));
 						focusView = mManagerEmailView;
 						cancel = true;
-					}
-					else if (mManagerEmail.length() > 100) {
-						mManagerEmailView.setError(getString(R.string.error_field_email_length));
-						focusView = mManagerEmailView;
-						cancel = true;
-					}else if (managerAtCount == 0) {
-						//System.out.println("Manager email does not have @");
-						mManagerEmailView.setError(getString(R.string.error_noAtTheRate));
-						focusView = mManagerEmailView;
-						cancel = true;
-					}else if (managerDotCount == 0) {
-						//System.out.println("Manager email does not have .");
-						mManagerEmailView.setError(getString(R.string.error_noDot));
-						focusView = mManagerEmailView;
-						cancel = true;
-					}else if (managerAtCount > 1) {
-						mManagerEmailView.setError(getString(R.string.error_field_at_rate));
-						focusView = mManagerEmailView;
-						cancel = true;
-					}else if(mManagerEmail.length() == 2){
-						if(atCount == 1 && dotCount == 1){
-							mManagerEmailView.setError(getString(R.string.error_justdotatrate));
+					}else{
+						boolean isValidManager = dbHandler.isUserRegistered(mManagerEmail);
+						if(isValidManager == false){
+							mManagerEmailView.setError(getString(R.string.error_invalid_managermail));
 							focusView = mManagerEmailView;
 							cancel = true;
 						}
-					}else if (!(mManagerEmail.contains("com") || mManagerEmail.contains(".edu"))){
-						mManagerEmailView.setError(getString(R.string.error_dotcom));
-						focusView = mManagerEmailView;
-						cancel = true;
+						else if (mManagerEmail.length() > 100) {
+							mManagerEmailView.setError(getString(R.string.error_field_email_length));
+							focusView = mManagerEmailView;
+							cancel = true;
+						}else if (managerAtCount == 0) {
+							mManagerEmailView.setError(getString(R.string.error_noAtTheRate));
+							focusView = mManagerEmailView;
+							cancel = true;
+						}else if (managerDotCount == 0) {
+							mManagerEmailView.setError(getString(R.string.error_noDot));
+							focusView = mManagerEmailView;
+							cancel = true;
+						}else if (managerAtCount > 1) {
+							mManagerEmailView.setError(getString(R.string.error_field_at_rate));
+							focusView = mManagerEmailView;
+							cancel = true;
+						}else if(mManagerEmail.length() == 2){
+							if(atCount == 1 && dotCount == 1){
+								mManagerEmailView.setError(getString(R.string.error_justdotatrate));
+								focusView = mManagerEmailView;
+								cancel = true;
+							}
+						}else if (!(mManagerEmail.contains("com") || mManagerEmail.contains(".edu"))){
+							mManagerEmailView.setError(getString(R.string.error_dotcom));
+							focusView = mManagerEmailView;
+							cancel = true;
+						}
 					}
 				}
 			}
-		}
-		if (cancel) {
-			// There was an error; don't attempt login and focus the first
-			// form field with an error.
-			focusView.requestFocus();
-		} else {
-			// Show a progress spinner, and kick off a background task to
-			// perform the user login attempt.
-			mLoginStatusMessageView.setText(R.string.login_progress_signing_up);
-			showProgress(true);
-			
-			long insertOutput = dbHandler.registerUser(mEmail, mUserName, mPassword, mManagerEmail, mRole, mTeam);
-			//System.out.println("no of records inserted : "+insertOutput);
-			
-			if(insertOutput > 0){
-				SharedPreferences settings = getSharedPreferences(PREFRENCES_NAME, Context.MODE_PRIVATE);
-				SharedPreferences.Editor editor = settings.edit();
-				editor.putString("userName", mUserName);
-				editor.putBoolean("isRegistered", true);
-				editor.putBoolean("isLoggedin", true);
-				editor.commit();
-				Toast.makeText(getBaseContext(), "Registered Successfully", Toast.LENGTH_LONG).show();
+			if (cancel) {
+				focusView.requestFocus();
+			} else {
+				// Show a progress spinner, and kick off a background task to
+				// perform the user login attempt.
+				mLoginStatusMessageView.setText(R.string.login_progress_signing_up);
+				showProgress(true);
+				
+				long insertOutput = dbHandler.registerUser(mEmail, mUserName, mPassword, mManagerEmail, mRole, mTeam);
+				//System.out.println("no of records inserted : "+insertOutput);
+				
+				if(insertOutput > 0){
+					SharedPreferences settings = getSharedPreferences(PREFRENCES_NAME, Context.MODE_PRIVATE);
+					SharedPreferences.Editor editor = settings.edit();
+					editor.putString("userName", mUserName);
+					editor.putBoolean("isRegistered", true);
+					editor.putBoolean("isLoggedin", true);
+					editor.commit();
+					Toast.makeText(getBaseContext(), "Registered Successfully", Toast.LENGTH_LONG).show();
+					mAuthTask = new UserRegistrationTask();
+					mAuthTask.execute((Void) null);
+				}
 			}
-			dbHandler.close();
-			mAuthTask = new UserLoginTask();
-			mAuthTask.execute((Void) null);
+		}catch(Exception exception){
+			Log.e("RegisterActivity", exception.getMessage().toString()) ;
+		}finally{
+			if(dbHandler!=null ){
+				dbHandler.close();
+			}
 		}
+		
 	}
 
 	/**
@@ -409,7 +401,7 @@ public class RegisterActivity extends Activity {
 	 * Represents an asynchronous login/registration task used to authenticate
 	 * the user.
 	 */
-	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+	public class UserRegistrationTask extends AsyncTask<Void, Void, Boolean> {
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			// TODO: attempt authentication against a network service.
@@ -426,11 +418,8 @@ public class RegisterActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(final Boolean success) {
-			mAuthTask = null;
-			showProgress(false);
-
+			
 			if (success) {
-				// finish(); should go to next page
 				nextActivity();
 			} else {
 				mPasswordView

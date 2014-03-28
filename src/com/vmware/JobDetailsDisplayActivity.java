@@ -4,29 +4,23 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class JobDetailsDisplayActivity extends Activity {
 	private static final String PREFRENCES_NAME = "myPrefs";
 	DataHandler dbHandler;
 	String jobIDToQuery = null;
-	//private UserLoginTask mAuthTask = null;
-	private EditText mSyncView;
 	
 	protected void onCreate(Bundle savedInstanceState) {
-		//System.out.println("OnCreate Method of JobDetailsDisplayActivity");
 		super.onCreate(savedInstanceState);
 		jobIDToQuery = getIntent().getStringExtra("JobIDForwarded");
-		//System.out.println("jobIDToQuery : jobDisplayActivity : "+jobIDToQuery);
 		setContentView(R.layout.activity_jobdetails);
-		//setupActionBar();
 		displayJobDetails(jobIDToQuery);
 	}
 	
@@ -34,37 +28,40 @@ public class JobDetailsDisplayActivity extends Activity {
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void setupActionBar() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			// Show the Up button in the action bar.
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
 	}
 
 	public void displayJobDetails(String jobID) {
-		//System.out.println("Entered Search Job");
+		try {
 		SharedPreferences sharedPref= getSharedPreferences(PREFRENCES_NAME, 0);
 		String userName = sharedPref.getString("userName", "");
-		//System.out.println("userName while searching ////////////////////////////////////////////////: "+userName);
-		
-		if(jobID.length() !=0 & jobID !=null){
-			
-			dbHandler = new DataHandler(getBaseContext());
-			dbHandler.open();
-			String[] jobDetails= dbHandler.fetchJobDetails(jobID,userName);
-			if(jobDetails == null){
-				//System.out.println("List null");
+			if (jobID.length() != 0 & jobID != null) {
+
+				dbHandler = new DataHandler(getBaseContext());
+				dbHandler.open();
+				String[] jobDetails = dbHandler
+						.fetchJobDetails(jobID, userName);
+				if (jobDetails == null) {
+					return;
+				}
+				if (jobDetails != null && jobDetails.length > 0) {
+
+					display(jobDetails, userName);
+				} else {
+					// no records found
+					Toast.makeText(getBaseContext(), "No Records Found",
+							Toast.LENGTH_LONG).show();
+
+				}
+
 			}
-			if(jobDetails!=null && jobDetails.length > 0){
-				
-				/*for(String s : jobDetails){
-					System.out.println("jobID : "+s);
-				}*/
-				display(jobDetails,userName);
-			}else{
-				// no records found
-				Toast.makeText(getBaseContext(), "No Records Found", Toast.LENGTH_LONG).show();
-				
+		}catch(Exception exception){
+			Log.e("JOBDETAILSDISPLAYACTIVITY", exception.getMessage().toString()) ;
+		} finally {
+			if(dbHandler!=null ){
+				dbHandler.close();
 			}
-			dbHandler.close();
 		}
 	}
 	
@@ -107,7 +104,7 @@ public class JobDetailsDisplayActivity extends Activity {
 		c12.setText("Memory Usage : "+jobArray[12]);
 		TextView c13 = ((TextView) findViewById(R.id.url_d));
 		c13.setText("Results URL : "+jobArray[13]);
-		//setContentView(R.layout.activity_jobdetails);
+		
 	}
 	
 	public void logoutDisplayJob(View view) {
@@ -151,41 +148,5 @@ public class JobDetailsDisplayActivity extends Activity {
 		Intent intent = new Intent(this, JobListDisplayActivity.class);
 		startActivity(intent);
 		
-	}
-
-	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-		@Override
-		protected Boolean doInBackground(Void... params) {
-			// TODO: attempt authentication against a network service.
-
-			try {
-				// Simulate network access.
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				return false;
-			}
-
-		// TODO: register the new account here.
-			return true;
-		}
-
-		@Override
-		protected void onPostExecute(final Boolean success) {
-			//mAuthTask = null;
-
-			if (success) {
-				// finish(); should go to next page
-				// nextActivity();
-			} else {
-				mSyncView.setError(getString(R.string.error_error_sync));
-				mSyncView.requestFocus();
-			}
-		}
-
-		@Override
-		protected void onCancelled() {
-			//mAuthTask = null;
-
-		}
 	}
 }

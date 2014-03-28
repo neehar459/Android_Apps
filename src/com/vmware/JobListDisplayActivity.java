@@ -20,11 +20,11 @@ import android.widget.Toast;
 
 public class JobListDisplayActivity extends ListActivity {
 	private static final String PREFRENCES_NAME = "myPrefs";
-	DataHandler dbHandler;
+	//DataHandler dbHandler;
 	 ListView listView;
 	 String jobIdForward = null;
 	//private UserLoginTask mAuthTask = null;
-	private EditText mSyncView;
+	//private EditText mSyncView;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -111,7 +111,7 @@ public class JobListDisplayActivity extends ListActivity {
 		
 	}
 
-	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+	/*public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			// TODO: attempt authentication against a network service.
@@ -145,5 +145,5 @@ public class JobListDisplayActivity extends ListActivity {
 			//mAuthTask = null;
 
 		}
-	}
+	}*/
 }

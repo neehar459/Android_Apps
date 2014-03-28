@@ -77,14 +77,9 @@ public class DataHandler {
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			//System.out.println("On Create method called");
-			// TODO Auto-generated method1 stub
 			try {
-				//System.out.println("query to create USER_DETAILS table : "+ USER_DETAILS_CREATE);
 				db.execSQL(USER_DETAILS_CREATE);
-				//System.out.println("query to create job_details table : " + JOB_DETAILS_CREATE);
 				db.execSQL(JOB_DETAILS_CREATE);
-				//System.out.println("query to create STATUS_DETAILS table : " + STATUS_DETAILS_CREATE);
 				db.execSQL(STATUS_DETAILS_CREATE);
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -93,16 +88,12 @@ public class DataHandler {
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			// TODO Auto-generated method stub
-			 //db.execSQL("DROP TABLE IF EXISTS"+JOB_DETAILS_CREATE);
-			 //db.execSQL("DROP TABLE IF EXISTS "+USER_DETAILS_CREATE);
 			onCreate(db);
 		}
 
 	}
 
 	public DataHandler open() {
-		//System.out.println("In Database open() ");
 		db = dbHelper.getWritableDatabase();
 		return this;
 	}
@@ -121,7 +112,6 @@ public class DataHandler {
 				c.moveToFirst();
 				maxUserId = Long.valueOf(c.getLong(0));
 			}
-			//System.out.println("User ID max from db : " + maxUserId);
 			if (maxUserId == null || maxUserId == -1) {
 				maxUserId = 0L;
 			}
@@ -138,14 +128,11 @@ public class DataHandler {
 			Long noOfRows = -1L;
 			SQLiteDatabase sqlDB1 = dbHelper.getReadableDatabase();
 			String userIDQuery = "SELECT COUNT(USER_ID) FROM "+ USER_DETAILS_TABLE_NAME + " WHERE EMAIL = '"+ email + "';";
-			//System.out.println("Query to get userid : " + userIDQuery);
 			Cursor c = sqlDB1.rawQuery(userIDQuery, null);
 			if (null != c && c.getCount() > 0) {
-				//System.out.println("cursor is not null");
 				c.moveToFirst();
 				noOfRows = Long.valueOf(c.getLong(0));
 			}
-			//System.out.println("Number of rows returned  from db : " + noOfRows + "for email : " + email);
 			if (noOfRows == 0) {
 				result = false;
 			}else{
@@ -166,7 +153,6 @@ public class DataHandler {
 				c.moveToFirst();
 				maxJobId = Long.valueOf(c.getLong(0));
 			}
-			//System.out.println("Job Id max from db : " + maxJobId);
 			if (maxJobId == null || maxJobId == -1) {
 				maxJobId = 0L;
 			}
@@ -200,8 +186,6 @@ public class DataHandler {
 	}
 
 	public long getUserID(String userName) {
-		//System.out.println("Entered getUSerId");
-		//System.out.println("username sent : " + userName);
 		if (userName == null || userName.length() == 0) {
 			return -1;
 		} else {
@@ -210,15 +194,12 @@ public class DataHandler {
 			String userIDQuery = "SELECT USER_ID FROM "
 					+ USER_DETAILS_TABLE_NAME + " WHERE USER_NAME = '"
 					+ userName + "'";
-			//System.out.println("Query to get userid : " + userIDQuery);
 			Cursor c = sqlDB1.rawQuery(userIDQuery, null);
 			if (null != c && c.getCount() > 0) {
 				c.moveToFirst();
 				maxNumber = Long.valueOf(c.getLong(0));
 			}
-			/*System.out.println("User ID returned  from db : " + maxNumber
-					+ "for username : " + userName);
-			*/if (maxNumber == null || maxNumber == -1) {
+			if (maxNumber == null || maxNumber == -1) {
 				maxNumber = 0L;
 			}
 			return maxNumber;
@@ -260,12 +241,10 @@ public class DataHandler {
 	}
 
 	public List<UserDetails> fetchUserDetails(String userName) {
-		//System.out.println("username : "+userName);
 		if (userName == null || userName.length() == 0) {
 			return null;
 		} else {
 			String userIDDetailsQuery = "SELECT * FROM "+ USER_DETAILS_TABLE_NAME + " WHERE USER_NAME = '"+ userName + "';";
-			//System.out.println("Query to get userdetails : " + userIDDetailsQuery);
 			Cursor userCursor = db.rawQuery(userIDDetailsQuery, null);
 			List<UserDetails> userDetailsList = new ArrayList<UserDetails>();
 			if(userCursor.getCount() <= 0){
@@ -295,9 +274,7 @@ public class DataHandler {
 		Long userIDLong = getUserID(userName);
 		String jobIDDetailsQuery = "SELECT * FROM "+JOB_DETAILS_TABLE_NAME+" WHERE JOB_ID = '"+jobID+"' ;";
 			String userId = String.valueOf(userIDLong);
-			/*System.out.println("userId : "+userId);
-			System.out.println("Query to get jobdetails : " + jobIDDetailsQuery);
-			*/Cursor jobCursor = db.rawQuery(jobIDDetailsQuery, null);
+			Cursor jobCursor = db.rawQuery(jobIDDetailsQuery, null);
 			List<String> job = new ArrayList<String>();
 			if(jobCursor.moveToFirst()){
 					job.add(jobCursor.getString(0));
@@ -365,53 +342,8 @@ public class DataHandler {
 			if(statusFlag && (mainFlag == false)){
 				jobIDDetailsQuery += " STATUS_ID = '"+statusId+"' "+"AND USER_ID = '"+userId+"' ";
 			}
-			
-			
-			/*if(jobId.length() > 0 && (priority.length() == 0)&&(statusId.length() == 0)&&(startDate.length() == 0)&&(endDate.length() == 0)){
-				System.out.println("case 1 if");
-				jobIDDetailsQuery += " JOB_ID = '"+jobId+"' ";
-			}else{
-				System.out.println("case 1 else");
-				jobIDDetailsQuery += " JOB_ID = '"+jobId+"' AND ";
-			}
-			if(priority.length() > 0 && (statusId.length() == 0)&&(startDate.length() == 0)&&(endDate.length() == 0)){
-				if(userId == null){
-					System.out.println("case 2 if");
-					jobIDDetailsQuery += " PRIORITY = '"+priority+"' ";
-				}else{
-					System.out.println("case 2 else");
-					jobIDDetailsQuery += " PRIORITY = '"+priority+"' AND USER_ID = '"+userId+"' ";
-				}
-			}
-			if(statusId.length() > 0 && (priority.length()==0)&&(startDate.length() == 0)&&(endDate.length() == 0)&& (jobId.length() == 0)){
-				if(userId == null){
-					System.out.println("case 3 if");
-					jobIDDetailsQuery += " STATUS_ID = '"+statusId+"' ";
-				}else{
-					System.out.println("case 3 else");
-					jobIDDetailsQuery += " STATUS_ID = '"+statusId+"' AND USER_ID = '"+userId+"' ";
-				}
-			}
-			*/// To modify dates condition
-			/*if(priority.length() > 0 && (statusId == null)&&(startDate == null)&&(endDate == null)&& (jobId == null)){
-				if(userId == null){
-					jobIDDetailsQuery += " PRIORITY = '"+priority+"' ";
-				}else{
-					jobIDDetailsQuery += " PRIORITY = '"+priority+"' AND USER_ID = '"+userId+"' ";
-				}
-			}*/
 			jobIDDetailsQuery+= " ; ";
-			/*System.out.println("Job Id in fetchJobDetails : ************************************* "+jobId);
-			System.out.println("Priority in fetchJobDetails : *************************************** "+priority);
-			System.out.println("Status ID in fetchJobDetails : *************************************** "+statusId);
-			System.out.println("StartDate in fetchJobDetails : *************************************** "+startDate);
-			System.out.println("End Date in fetchJobDetails : *************************************** "+endDate);
-			System.out.println("End Date in fetchJobDetails : *************************************** "+userName);
-			
-			System.out.println("Query to get jobdetails : " + jobIDDetailsQuery);
-			*/
 			Cursor jobCursor = db.rawQuery(jobIDDetailsQuery, null);
-			//user.
 			List<String> jobIdList = new ArrayList<String>();
 			if(jobCursor!=null && jobCursor.getCount() > 0){
 				if(jobCursor.moveToFirst()){
@@ -432,21 +364,17 @@ public class DataHandler {
 		if (email == null || email.length() == 0) {
 			return null;
 		} else {
-			Long emailRowCount = null;
+			Long emailRowCount = -1L;
 			SQLiteDatabase sqlDB1 = dbHelper.getReadableDatabase();
 			String userIDQuery = "SELECT USER_ID,PWD FROM "
 					+ USER_DETAILS_TABLE_NAME + " WHERE EMAIL = '" + email
 					+ "';";
-			//System.out.println("Query to get userid : " + userIDQuery);
 			Cursor c = sqlDB1.rawQuery(userIDQuery, null);
-			//System.out.println("Cursor.getCount : "+c.getCount());
 			if (null != c && c.getCount() > 0) {
 				c.moveToFirst();
 				emailRowCount = Long.valueOf(c.getLong(0));
 			}
 			
-			//System.out.println("No of rows returned from the db  for email : "
-					//+ emailRowCount + "for email : " + email);
 			if (emailRowCount < 0) {
 				return "Email is not present.";
 			} else {
@@ -461,9 +389,7 @@ public class DataHandler {
 	}
 
 	public String validateUserName(String userName) {
-		/*System.out.println("Entered validateUser");
-		System.out.println("userName entered : " + userName);
-		*/if (userName == null || userName.length() == 0) {
+		if (userName == null || userName.length() == 0) {
 			return null;
 		} else {
 			SQLiteDatabase sqlDB1 = dbHelper.getReadableDatabase();
@@ -471,7 +397,6 @@ public class DataHandler {
 			String userNameQuery = "SELECT COUNT(*) FROM "
 					+ USER_DETAILS_TABLE_NAME + " WHERE USER_NAME = '"
 					+ userName + "';";
-			//System.out.println("Query to validate userName : " + userNameQuery);
 			Cursor c = sqlDB1.rawQuery(userNameQuery, null);
 			if (null != c && c.getCount() > 0) {
 				c.moveToFirst();

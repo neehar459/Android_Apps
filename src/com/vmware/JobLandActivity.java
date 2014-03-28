@@ -16,7 +16,7 @@ public class JobLandActivity extends Activity {
 	private static final String PREFRENCES_NAME = "myPrefs";
 	DataHandler dbHandler;
 	//private UserLoginTask mAuthTask = null;
-	private EditText mSyncView;
+	//private EditText mSyncView;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -65,7 +65,7 @@ public class JobLandActivity extends Activity {
 	
 	
 
-	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+	/*public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			// TODO: attempt authentication against a network service.
@@ -99,5 +99,5 @@ public class JobLandActivity extends Activity {
 			//mAuthTask = null;
 
 		}
-	}
+	}*/
 }
