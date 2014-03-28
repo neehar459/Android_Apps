@@ -1,0 +1,359 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#d2b48c"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".JobDetailsDisplayActivity">
+<TableLayout 
+    android:layout_marginTop="32dp"
+    android:id="@+id/tableLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+ 
+    <!-- 2 columns -->
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip" >
+ 
+        <TextView
+            android:id="@+id/textView1"
+            android:text="Job Id"
+            android:textColor="#000000"
+              />
+ 		 <TextView
+                android:id="@+id/jobID_dm"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#d2b48c"
+                android:textColor="#0000ff" >
+            </TextView>
+       
+    </TableRow>
+    
+    
+    <TableRow
+        android:id="@+id/tableRow10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip" >
+ 		<TextView
+            android:id="@+id/textView10"
+            android:text="Description"
+            android:textColor="#000000"
+              />
+ 		 <TextView
+                android:id="@+id/description_dm"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#d2b48c"
+                android:textColor="#0000ff"
+                  >
+            </TextView>
+       
+    </TableRow>
+    
+    
+ 
+    <!-- edittext span 2 column -->
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip" >
+ 
+        <TextView
+            android:id="@+id/textView2"
+            android:text="Job Created By"
+            android:textColor="#000000"
+              />
+ 		 <TextView
+                android:id="@+id/userID_dm"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#d2b48c"
+                android:textColor="#0000ff"
+                  >
+            </TextView>
+    </TableRow>
+ 
+   
+    <TableRow
+        android:id="@+id/tableRow3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip" >
+ 
+      	<TextView
+            android:id="@+id/textView3"
+            android:text="Job Creation Date"
+            android:textColor="#000000"
+              />
+ 		 <TextView
+                android:id="@+id/creationDate_dm"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#d2b48c"
+                android:textColor="#0000ff"
+                android:minLines="2"
+                android:singleLine="false"
+                  >
+            </TextView>
+ 
+       
+    </TableRow>
+ 
+    
+    <TableRow
+        android:id="@+id/tableRow4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip" >
+ 		<TextView
+            android:id="@+id/textView4"
+            android:text="Job End Date"
+            android:textColor="#000000"
+              />
+ 		 <TextView
+                android:id="@+id/endDate_dm"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#d2b48c"
+                android:textColor="#0000ff"
+                  >
+            </TextView>
+       
+    </TableRow>
+ 
+   
+    <TableRow
+        android:id="@+id/tableRow5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip" >
+ 		<TextView
+            android:id="@+id/textView5"
+            android:text="Created By Team"
+            android:textColor="#000000"
+              />
+ 		 <TextView
+                android:id="@+id/selfTeam_dm"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#d2b48c"
+                android:textColor="#0000ff"
+                  >
+            </TextView>
+       
+    </TableRow>
+    
+    
+    <TableRow
+        android:id="@+id/tableRow6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip" >
+ 		<TextView
+            android:id="@+id/textView6"
+            android:text="Targetted Team"
+            android:textColor="#000000"
+              />
+ 		 <TextView
+                android:id="@+id/targetTeam_dm"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#d2b48c"
+                android:textColor="#0000ff"
+                  >
+            </TextView>
+       
+    </TableRow>
+    
+    <TableRow
+        android:id="@+id/tableRow7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip" >
+ 		<TextView
+            android:id="@+id/textView7"
+            android:text="Priority"
+            android:textColor="#000000"
+              />
+ 		 <TextView
+                android:id="@+id/priority_dm"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#d2b48c"
+                android:textColor="#0000ff"
+                  >
+            </TextView>
+       
+    </TableRow>
+    
+    <TableRow
+        android:id="@+id/tableRow8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip" >
+ 		<TextView
+            android:id="@+id/textView8"
+            android:text="Target Duration"
+            android:textColor="#000000"
+              />
+ 		 <TextView
+                android:id="@+id/targetDuration_dm"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#d2b48c"
+                android:textColor="#0000ff"
+                  >
+            </TextView>
+       
+    </TableRow>
+    
+    <TableRow
+        android:id="@+id/tableRow9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip" >
+ 		<TextView
+            android:id="@+id/textView9"
+            android:text="Actual Duration"
+            android:textColor="#000000"
+              />
+ 		 <TextView
+                android:id="@+id/actualDuration_dm"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#d2b48c"
+                android:textColor="#0000ff"
+                  >
+            </TextView>
+       
+    </TableRow>
+    
+    
+    
+    
+    <TableRow
+        android:id="@+id/tableRow11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip" >
+ 		<TextView
+            android:id="@+id/textView11"
+            android:text="Status ID"
+            android:textColor="#000000"
+              />
+ 		 <TextView
+                android:id="@+id/statusID_dm"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#d2b48c"
+                android:textColor="#0000ff"
+                  >
+            </TextView>
+       
+    </TableRow>
+ 
+    <TableRow
+        android:id="@+id/tableRow12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip" >
+ 		<TextView
+            android:id="@+id/textView12"
+            android:text="CPU Usage"
+            android:textColor="#000000"
+              />
+ 		 <TextView
+                android:id="@+id/cpuUsage_dm"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#d2b48c"
+                android:textColor="#0000ff"
+                  >
+            </TextView>
+       
+    </TableRow>
+    
+     <TableRow
+        android:id="@+id/tableRow13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip" >
+ 		<TextView
+            android:id="@+id/textView13"
+            android:text="Memory Usage"
+            android:textColor="#000000"
+              />
+ 		 <TextView
+                android:id="@+id/memoryUsage_dm"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#d2b48c"
+                android:textColor="#0000ff"
+                  >
+            </TextView>
+       
+    </TableRow>
+    
+      <TableRow
+        android:id="@+id/tableRow14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip" >
+ 		<TextView
+            android:id="@+id/textView14"
+            android:text="URL"
+            android:textColor="#000000"
+              />
+ 		 <TextView
+                android:id="@+id/url_dm"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#d2b48c"
+                android:textColor="#0000ff"
+                android:singleLine="false"
+                android:textIsSelectable="true"
+                android:autoLink="web"
+                  >
+            </TextView>
+       
+    </TableRow>
+    
+       <TableRow
+        android:id="@+id/tableRow15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip" >
+ 		
+ 		 <Button
+        android:id="@+id/edit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="editJob"
+        android:text="@string/action_edit"
+        android:textColor="#000000" />
+ 		 
+ 		 
+ 		 <Button
+        android:id="@+id/logout_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="logoutDisplayJob"
+        android:text="@string/action_logout"
+        android:textColor="#000000" />
+       
+    </TableRow>
+    
+    
+</TableLayout>
+</ScrollView>

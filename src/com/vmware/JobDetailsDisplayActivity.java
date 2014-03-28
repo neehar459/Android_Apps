@@ -20,7 +20,7 @@ public class JobDetailsDisplayActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		jobIDToQuery = getIntent().getStringExtra("JobIDForwarded");
-		setContentView(R.layout.activity_jobdetails);
+		setContentView(R.layout.activity_joblist_modified);
 		displayJobDetails(jobIDToQuery);
 	}
 	
@@ -67,43 +67,43 @@ public class JobDetailsDisplayActivity extends Activity {
 	
 	
 	private void display(String[] jobArray, String userName) {
-		TextView c0 = ((TextView) findViewById(R.id.jobID_d));
-		c0.setText("Job ID : "+jobArray[0]);
-		TextView c1 = ((TextView) findViewById(R.id.userID_d));
-		c1.setText("Job Created By : "+userName);
-		TextView c2 = ((TextView) findViewById(R.id.creationDate_d));
-		c2.setText("Job Creation Date : "+jobArray[2]);
-		TextView c3 = ((TextView) findViewById(R.id.endDate_d));
+		TextView c0 = ((TextView) findViewById(R.id.jobID_dm));
+		c0.setText(jobArray[0]);
+		TextView c1 = ((TextView) findViewById(R.id.userID_dm));
+		c1.setText(userName);
+		TextView c2 = ((TextView) findViewById(R.id.creationDate_dm));
+		c2.setText(jobArray[2]);
+		TextView c3 = ((TextView) findViewById(R.id.endDate_dm));
 		if(jobArray[3].length() == 0){
-			c3.setText("Job End Date : ---- ");
+			c3.setText(" ---- ");
 		}else{
-			c3.setText("Job End Date : "+jobArray[3]+" Hours ");
+			c3.setText(jobArray[3]);
 		}
-		TextView c4 = ((TextView) findViewById(R.id.selfTeam_d));
-		c4.setText("Job created Team : "+jobArray[4]);
-		TextView c5 = ((TextView) findViewById(R.id.targetTeam_d));
-		c5.setText("Job targetted Team :"+jobArray[5]);
-		TextView c6 = ((TextView) findViewById(R.id.priority_d));
-		c6.setText("Priority : "+jobArray[6]);
-		TextView c7 = ((TextView) findViewById(R.id.targetDuration_d));
-		c7.setText("Expected Duration : "+jobArray[7]+" Hours ");
-		TextView c8 = ((TextView) findViewById(R.id.actualDuration_d));
+		TextView c4 = ((TextView) findViewById(R.id.selfTeam_dm));
+		c4.setText(jobArray[4]);
+		TextView c5 = ((TextView) findViewById(R.id.targetTeam_dm));
+		c5.setText(jobArray[5]);
+		TextView c6 = ((TextView) findViewById(R.id.priority_dm));
+		c6.setText(jobArray[6]);
+		TextView c7 = ((TextView) findViewById(R.id.targetDuration_dm));
+		c7.setText(jobArray[7]+" Hours ");
+		TextView c8 = ((TextView) findViewById(R.id.actualDuration_dm));
 		if(jobArray[8].length() == 0){
-			c8.setText("Actual Duration : ---- Hours ");
+			c8.setText(" ---- ");
 		}else{
-			c8.setText("Actual Duration : "+jobArray[8]+" Hours ");
+			c8.setText(jobArray[8]+" Hours ");
 		}
 		
-		TextView c9 = ((TextView) findViewById(R.id.description_d));
-		c9.setText("Description of job : "+jobArray[9]);
-		TextView c10 = ((TextView) findViewById(R.id.statusID_d));
-		c10.setText("Status of job : "+jobArray[10]);
-		TextView c11 = ((TextView) findViewById(R.id.cpuUsage_d));
-		c11.setText("CPU Usage : "+jobArray[11]);
-		TextView c12 = ((TextView) findViewById(R.id.memoryUsage_d));
-		c12.setText("Memory Usage : "+jobArray[12]);
-		TextView c13 = ((TextView) findViewById(R.id.url_d));
-		c13.setText("Results URL : "+jobArray[13]);
+		TextView c9 = ((TextView) findViewById(R.id.description_dm));
+		c9.setText(jobArray[9]);
+		TextView c10 = ((TextView) findViewById(R.id.statusID_dm));
+		c10.setText(jobArray[10]);
+		TextView c11 = ((TextView) findViewById(R.id.cpuUsage_dm));
+		c11.setText(jobArray[11]);
+		TextView c12 = ((TextView) findViewById(R.id.memoryUsage_dm));
+		c12.setText(jobArray[12]);
+		TextView c13 = ((TextView) findViewById(R.id.url_dm));
+		c13.setText(jobArray[13]);
 		
 	}
 	
